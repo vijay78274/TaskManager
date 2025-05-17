@@ -20,8 +20,9 @@ public class UserService {
         return repository.save(user);
     }
 
-    public void createUser(String name, String email, String rawPassword, Role role){
+    public void createUser(String emp_id, String name, String email, String rawPassword, Role role){
         Users user = new Users();
+        user.setEmpId(emp_id);
         user.setEmail(email);
         user.setName(name);
         user.setRole(role);

@@ -1,21 +1,28 @@
 package com.example.TaskManager.Security;
 
-import com.example.TaskManager.Models.Role;
+import java.time.LocalDateTime;
 
+import com.example.TaskManager.Models.Role;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="users")
-public class Users {
+public class Users{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "emp_id")
+    private String empId; 
+   
+    public String getEmpId() {
+        return empId;
+    }
+    public void setEmpId(String empId) {
+        this.empId = empId;
+    }
     private String name;
     private String email;
     @Enumerated(EnumType.STRING)
@@ -27,20 +34,23 @@ public class Users {
     public void setPassword(String password) {
         this.password = password;
     }
-    public String getManager_id() {
-        return manager_id;
+    
+    public String getManagerId() {
+        return managerId;
     }
-    public void setManager_id(String manager_id) {
-        this.manager_id = manager_id;
+    public void setManagerId(String managerId) {
+        this.managerId = managerId;
     }
-    public String getTeam_lead_id() {
-        return team_lead_id;
+    public String getTeamLeadId() {
+        return teamLeadId;
     }
-    public void setTeam_lead_id(String team_lead_id) {
-        this.team_lead_id = team_lead_id;
+    public void setTeamLeadId(String teamLeadId) {
+        this.teamLeadId = teamLeadId;
     }
-    private String manager_id;
-    private String team_lead_id;
+    @Column(name = "manager_id")
+    private String managerId;
+    @Column(name = "team_lead_id")
+    private String teamLeadId;
     public String getName() {
         return name;
     }
@@ -59,5 +69,21 @@ public class Users {
     public void setRole(Role role) {
         this.role = role;
     }
-    
+    @Column(name = "otp")
+    private String otp;
+    @Column(name = "otp_generated_time")
+    private LocalDateTime otpGeneratedTime;
+
+    public String getOtp() {
+        return otp;
+    }
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
+    public LocalDateTime getOtpGeneratedTime() {
+        return otpGeneratedTime;
+    }
+    public void setOtpGeneratedTime(LocalDateTime otpGeneratedTime) {
+        this.otpGeneratedTime = otpGeneratedTime;
+    }
 }

@@ -4,22 +4,30 @@
         <meta charset="UTF-8">
         <meta type="viewport" content="width=device-width, initial-scale=1.0">
         <title>document</title>
-        <link rel="stylesheet" th:href="@{/static/Login.css}">
+        <link rel="stylesheet" th:href="@{/css/Login.css}">
     </head>
     <body>
        <div class="container">
             <h1>Login</h1>
+           <form  th:action="@{/perform_login}" method="post">
             <div class="input-group">
-                <input placeholder="Enter Employee ID">
+                <input placeholder="Enter Employee ID" name="username" type="text" id="empId" required>
             </div>
             <div class="input-group">
-                <input placeholder="Enter password">     
+                <input placeholder="Enter password" name="password" type="password" required>     
             </div>
             <div class="links">
-                <a href="#">Link gmail to account</a>
+                <a href="/forgot">Link gmail to account</a>
                 <a href="#">Forgot Password?</a>
             </div>
-            <button class="button">LogIn</button>
+            <button type="submit" class="button">LogIn</button>
+           </form>
+           <div  th:if="${session.error}">
+            <p th:text="${session.error}" style="color:red;"></p>
+        </div>
+            <div th:if="${param.logout}" style="color: green;">
+                You have been logged out successfully.
+            </div>
        </div>
     </body>
 </html>

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.example.TaskManager.Security.Users;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,9 +18,10 @@ public class Progress {
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(name = "week_start")
     private LocalDate weekStart;
     private String summary;
+    @Column(name = "percent_done")
     private int percentDone;
 
     @ManyToOne

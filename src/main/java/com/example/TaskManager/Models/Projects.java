@@ -2,6 +2,7 @@ package com.example.TaskManager.Models;
 
 import java.security.Timestamp;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,20 +17,10 @@ public class Projects {
     private Long id;
     private String name;
     private String description;
-    private String manager_id;
-    public String getManager_id() {
-        return manager_id;
-    }
-    public void setManager_id(String manager_id) {
-        this.manager_id = manager_id;
-    }
-    public Timestamp getCreated_at() {
-        return created_at;
-    }
-    public void setCreated_at(Timestamp created_at) {
-        this.created_at = created_at;
-    }
-    private Timestamp created_at;
+    @Column(name="manager_id")
+    private String managerId;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
     public String getName() {
         return name;
     }
@@ -42,11 +33,24 @@ public class Projects {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getCreated_by() {
-        return created_by;
+    @Column(name = "created_by")
+    private String createdBy;
+    public String getManagerId() {
+        return managerId;
     }
-    public void setCreated_by(String created_by) {
-        this.created_by = created_by;
+    public void setManagerId(String managerId) {
+        this.managerId = managerId;
     }
-    private String created_by;
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
+    }
+    public String getCreatedBy() {
+        return createdBy;
+    }
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 }

@@ -27,38 +27,32 @@ public class SecurityConfig {
     @Autowired
     private MyUserDetailsServices userDetailsServices;
 
+    @Autowired
+    private CustomAuthenticationFailureHandler failureHandler;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
-        .csrf(csrf -> csrf.disable()) 
+        // .csrf(csrf -> csrf.disable()) 
         .authorizeHttpRequests(request -> 
             request
-            // .requestMatchers("/css/**", "/javascript/**","/images/**","/start","/tenet/signup","/landlord/signup","/cloudinary/upload").permitAll() 
+            .requestMatchers("/css/**", "/javascript/**","/images/**","/login","/forgot","/send-otp","/reset-password").permitAll() 
             // .requestMatchers("/tenet/**").hasRole("Tenet") 
             // .requestMatchers("/landlord/**").hasRole("Landlord") 
                 .anyRequest().authenticated())
-                .formLogin(login -> login
-        .defaultSuccessUrl("/atm/main", true)  
-        .permitAll()
-    )
-    .logout(logout -> logout
-        .logoutUrl("/logout")  
-        .logoutSuccessUrl("/login?logout")  
-        .permitAll()
-    )
-        // .formLogin(form -> 
-        //     form
-        //         .loginPage("/login") 
-        //         .loginProcessingUrl("/perform_login") 
-        //         .successHandler(authenticationSuccessHandler())
-        //         .failureUrl("/login?error=true") 
-        //         .permitAll() 
-        //     )
-        //     .logout(logout -> logout
-        //     .logoutUrl("/logout")  
-        //     .logoutSuccessUrl("/login?logout")  
-        //     .permitAll()
-        //     )
+        .formLogin(form -> 
+            form
+                .loginPage("/login") 
+                .loginProcessingUrl("/perform_login") 
+                .successHandler(authenticationSuccessHandler()) 
+                .failureHandler(failureHandler) 
+                .permitAll() 
+            )
+            .logout(logout -> logout
+            .logoutUrl("/logout")  
+            .logoutSuccessUrl("/login?logout")  
+            .permitAll()
+            )
             .httpBasic(Customizer.withDefaults())
         .build();
     }

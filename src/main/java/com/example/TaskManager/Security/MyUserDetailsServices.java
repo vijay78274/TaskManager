@@ -13,11 +13,12 @@ public class MyUserDetailsServices implements UserDetailsService{
     private UsersRepository repository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users user = repository.findByEmail(username);
-        if(user==null){
-            throw new UsernameNotFoundException("User not found");
+        System.out.println("Entered userdetails");
+        Users user = repository.findByEmpId(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User Not Found");
         }
-        System.out.println(user);
+        System.out.println(username+" "+user);
         return new MyUserDetails(user);
     }
     

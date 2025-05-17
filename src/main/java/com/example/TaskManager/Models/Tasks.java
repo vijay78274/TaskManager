@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.example.TaskManager.Security.Users;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,6 +25,7 @@ public class Tasks {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+    @Column(name = "due_date")
     private LocalDate dueDate;
 
     @Enumerated(EnumType.STRING)

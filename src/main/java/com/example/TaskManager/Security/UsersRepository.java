@@ -1,7 +1,12 @@
 package com.example.TaskManager.Security;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UsersRepository extends JpaRepository<Users,Long> {
-    Users findByEmail(String email);
+
+
+public interface UsersRepository extends JpaRepository<Users,String> {
+    Optional<Users> findByEmail(String email);
+    Users findByEmpId(String empId);
 }
