@@ -9,12 +9,12 @@
     <body>
        <div class="container">
             <h1>Login</h1>
-           <form  th:action="@{/perform_login}" method="post">
+           <form id="loginForm">
             <div class="input-group">
-                <input placeholder="Enter Employee ID" name="username" type="text" id="empId" required>
+                <input placeholder="Enter Employee ID" name="username" type="text" id="username" required>
             </div>
             <div class="input-group">
-                <input placeholder="Enter password" name="password" type="password" required>     
+                <input placeholder="Enter password" name="password" type="password" id="password" required>     
             </div>
             <div class="links">
                 <a href="/forgot">Link gmail to account</a>
@@ -29,5 +29,6 @@
                 You have been logged out successfully.
             </div>
        </div>
+       <script th:src="@{/javascript/Login.js}"></script>
     </body>
 </html>

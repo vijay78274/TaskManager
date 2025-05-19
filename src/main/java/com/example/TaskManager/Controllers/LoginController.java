@@ -1,22 +1,35 @@
 package com.example.TaskManager.Controllers;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.example.TaskManager.Security.JwtService;
 import com.example.TaskManager.Security.Users;
 import com.example.TaskManager.Security.UsersRepository;
+import com.example.TaskManager.Service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +43,12 @@ public class LoginController {
     private JavaMailSender mailSender;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtService service;
+    @Autowired
+    UserService userService;
 
     @GetMapping("/login")
     public String login(Model model, HttpServletRequest request) {
@@ -42,6 +61,15 @@ public class LoginController {
             }
         }
         return "Login"; 
+    }
+
+    @PostMapping("/jwt_login")
+    public ResponseEntity<String> login(@RequestBody Users request) {
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(request.getEmpId(), request.getPassword())
+        );
+        String token = service.generateToken(request.getEmpId());
+        return ResponseEntity.ok(token);
     }
 
     @GetMapping("/forgot")
@@ -117,4 +145,11 @@ public class LoginController {
         model.addAttribute("message", "Password reset successful.");
         return "Login"; // or any confirmation page
     }
+    
+    @GetMapping("/users")
+    public ResponseEntity<List<Users>> getMethodName() {
+        List<Users> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+    
 }

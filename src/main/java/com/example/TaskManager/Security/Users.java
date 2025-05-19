@@ -86,4 +86,9 @@ public class Users{
     public void setOtpGeneratedTime(LocalDateTime otpGeneratedTime) {
         this.otpGeneratedTime = otpGeneratedTime;
     }
+    public Users(String empId, String password){
+        this.empId=empId;
+        this.password=password;
+    }
+    public Users(){}
 }

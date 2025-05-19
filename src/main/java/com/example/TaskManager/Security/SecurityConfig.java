@@ -3,6 +3,7 @@ package com.example.TaskManager.Security;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,11 +12,13 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,35 +29,21 @@ public class SecurityConfig {
     
     @Autowired
     private MyUserDetailsServices userDetailsServices;
-
     @Autowired
-    private CustomAuthenticationFailureHandler failureHandler;
+    private JwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
-        // .csrf(csrf -> csrf.disable()) 
+        .csrf(csrf -> csrf.disable()) 
         .authorizeHttpRequests(request -> 
             request
-            .requestMatchers("/css/**", "/javascript/**","/images/**","/login","/forgot","/send-otp","/reset-password").permitAll() 
-            // .requestMatchers("/tenet/**").hasRole("Tenet") 
-            // .requestMatchers("/landlord/**").hasRole("Landlord") 
+            .requestMatchers("/css/**", "/javascript/**","/images/**","/login","/forgot","/send-otp","/reset-password","/jwt_login").permitAll() 
                 .anyRequest().authenticated())
-        .formLogin(form -> 
-            form
-                .loginPage("/login") 
-                .loginProcessingUrl("/perform_login") 
-                .successHandler(authenticationSuccessHandler()) 
-                .failureHandler(failureHandler) 
-                .permitAll() 
-            )
-            .logout(logout -> logout
-            .logoutUrl("/logout")  
-            .logoutSuccessUrl("/login?logout")  
-            .permitAll()
-            )
-            .httpBasic(Customizer.withDefaults())
-        .build();
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .userDetailsService(userDetailsServices)
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .httpBasic(Customizer.withDefaults()).build();
     }
 
     @Bean
