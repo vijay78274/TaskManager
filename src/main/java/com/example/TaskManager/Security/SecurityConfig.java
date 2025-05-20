@@ -42,6 +42,12 @@ public class SecurityConfig {
                 .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+            .logout(logout -> logout
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/login?logout")
+            .invalidateHttpSession(true)
+            .deleteCookies("token") 
+            .clearAuthentication(true))
                 .httpBasic(Customizer.withDefaults()).build();
     }
 

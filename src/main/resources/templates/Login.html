@@ -11,10 +11,10 @@
             <h1>Login</h1>
            <form id="loginForm">
             <div class="input-group">
-                <input placeholder="Enter Employee ID" name="username" type="text" id="username" required>
+                <input placeholder="Enter Employee ID" type="text" id="username" required>
             </div>
             <div class="input-group">
-                <input placeholder="Enter password" name="password" type="password" id="password" required>     
+                <input placeholder="Enter password" type="password" id="password" required>     
             </div>
             <div class="links">
                 <a href="/forgot">Link gmail to account</a>
@@ -22,9 +22,9 @@
             </div>
             <button type="submit" class="button">LogIn</button>
            </form>
-           <div  th:if="${session.error}">
-            <p th:text="${session.error}" style="color:red;"></p>
-        </div>
+           <div th:if="${errorMessage}" style="color:red;" >
+            <p th:text="${errorMessage}"></p>
+            </div>
             <div th:if="${param.logout}" style="color: green;">
                 You have been logged out successfully.
             </div>

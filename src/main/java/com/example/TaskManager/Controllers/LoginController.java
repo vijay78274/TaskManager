@@ -2,7 +2,6 @@ package com.example.TaskManager.Controllers;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -15,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
@@ -24,9 +22,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.TaskManager.Models.Role;
 import com.example.TaskManager.Security.JwtService;
+import com.example.TaskManager.Security.MyUserDetails;
 import com.example.TaskManager.Security.Users;
 import com.example.TaskManager.Security.UsersRepository;
 import com.example.TaskManager.Service.UserService;
@@ -53,30 +53,31 @@ public class LoginController {
     UserService userService;
 
     @GetMapping("/login")
-    public String login(Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            Exception ex = (Exception) session.getAttribute("SPRING_SECURITY_LAST_EXCEPTION");
-            if (ex != null) {
-                model.addAttribute("error", ex.getMessage());
-                session.removeAttribute("SPRING_SECURITY_LAST_EXCEPTION");
-            }
+    public String login(Model model, @RequestParam(value = "error", required = false) String error) {
+        if (error != null) {
+            model.addAttribute("errorMessage", "Invalid username or password");
         }
         return "Login"; 
     }
 
     @PostMapping("/jwt_login")
-    public ResponseEntity<String> login(@RequestBody Users request, HttpServletResponse response) {
-        authenticationManager.authenticate(
+    public String login(@RequestBody Users request, HttpServletResponse response,  RedirectAttributes redirectAttributes) {
+        try{
+            authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.getEmpId(), request.getPassword())
-        );
-        String token = service.generateToken(request.getEmpId());
-        Cookie cookie = new Cookie("token", token);
-        cookie.setHttpOnly(true); // prevent access via JavaScript
-        cookie.setPath("/");
-        cookie.setMaxAge(24 * 60 * 60); 
-        response.addCookie(cookie);
-        return ResponseEntity.ok(token);
+            );
+            String token = service.generateToken(request.getEmpId());
+            Cookie cookie = new Cookie("token", token);
+            cookie.setHttpOnly(true); // prevent access via JavaScript
+            cookie.setPath("/");
+            cookie.setMaxAge(24 * 60 * 60); 
+            response.addCookie(cookie);
+            return "redirect:/home";
+        }
+        catch (BadCredentialsException e) {
+            redirectAttributes.addAttribute("error","true");
+            return "redirect:/login";
+        }
     }
 
     @GetMapping("/forgot")
@@ -158,5 +159,16 @@ public class LoginController {
         List<Users> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
-    
+    @GetMapping("/home")
+    public String homePage(Model model, Authentication authentication) {
+        MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+        Role role = userDetails.getRole();
+        if (role.equals(Role.MANAGER)) {
+            return "manager-dashboard";
+        } else if (role.equals(Role.TEAM_LEAD)) {
+            return "lead-dashboard";
+        } else {
+            return "member-dashboard";
+        }
+    }
 }
