@@ -41,7 +41,6 @@ public class SecurityConfig {
             .requestMatchers("/css/**", "/javascript/**","/images/**","/login","/forgot","/send-otp","/reset-password","/jwt_login").permitAll() 
                 .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .userDetailsService(userDetailsServices)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(Customizer.withDefaults()).build();
     }
@@ -65,21 +64,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-     @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new AuthenticationSuccessHandler() {
-            @Override
-            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
-
-                if (userDetails.getRole().equals("Team_Lead")) {
-                    response.sendRedirect("/landlord/home");
-                } else if (userDetails.getRole().equals("Employee")) {
-                    response.sendRedirect("/tenet/home");
-                } else {
-                    response.sendRedirect("/default");
-                }
-            }
-        };
-    }
 }

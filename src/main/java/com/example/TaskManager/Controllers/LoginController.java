@@ -31,7 +31,9 @@ import com.example.TaskManager.Security.Users;
 import com.example.TaskManager.Security.UsersRepository;
 import com.example.TaskManager.Service.UserService;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -64,11 +66,16 @@ public class LoginController {
     }
 
     @PostMapping("/jwt_login")
-    public ResponseEntity<String> login(@RequestBody Users request) {
+    public ResponseEntity<String> login(@RequestBody Users request, HttpServletResponse response) {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.getEmpId(), request.getPassword())
         );
         String token = service.generateToken(request.getEmpId());
+        Cookie cookie = new Cookie("token", token);
+        cookie.setHttpOnly(true); // prevent access via JavaScript
+        cookie.setPath("/");
+        cookie.setMaxAge(24 * 60 * 60); 
+        response.addCookie(cookie);
         return ResponseEntity.ok(token);
     }
 

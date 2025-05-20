@@ -15,6 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -30,6 +31,7 @@ public class JwtFilter extends OncePerRequestFilter{
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
                 System.out.println("Entering jwtFilter");
+                final String jwt = getJwtFromCookies(request);
                 String authHeader = request.getHeader("Authorization");
                 String token = null;
                 String username = null;
@@ -56,6 +58,16 @@ public class JwtFilter extends OncePerRequestFilter{
                 }
             filterChain.doFilter(request, response);
         // throw new UnsupportedOperationException("Unimplemented method 'doFilterInternal'");
+    }
+    private String getJwtFromCookies(HttpServletRequest request) {
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals("token")) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
     }
     
 }
