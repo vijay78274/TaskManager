@@ -8,5 +8,10 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
                 empId: document.getElementById('username').value,
                 password: document.getElementById('password').value
             })
+        })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;  
+            }
         });
 });

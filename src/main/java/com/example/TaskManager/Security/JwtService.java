@@ -41,13 +41,13 @@ public class JwtService {
                 .compact();
     }
      public boolean validateToken(String token, UserDetails userDetails) {
-        System.out.println("Validating Token");
+        // System.out.println("Validating Token");
         String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
     public String extractUsername(String token) {
-        System.out.println("Extracting Username");
+        // System.out.println("Extracting Username");
         return extractClaim(token, Claims::getSubject);
     }
 

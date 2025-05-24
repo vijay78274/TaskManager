@@ -39,6 +39,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(request -> 
             request
             .requestMatchers("/css/**", "/javascript/**","/images/**","/login","/forgot","/send-otp","/reset-password","/jwt_login").permitAll() 
+            .requestMatchers("/manager/**").hasRole("MANAGER")
                 .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -55,7 +56,7 @@ public class SecurityConfig {
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
-        System.out.println("Entering user details service");
+        // System.out.println("Entering user details service");
         provider.setUserDetailsService(userDetailsServices);
         return provider;
     }

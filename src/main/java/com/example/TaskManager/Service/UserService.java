@@ -31,7 +31,7 @@ public class UserService {
         String password = passwordEncoder.encode(rawPassword);
         user.setPassword(password);
         repository.save(user);
-        System.out.println(user);
+        // System.out.println(user);
     }
 
     public List<Users> getAllUsers(){

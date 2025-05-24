@@ -30,15 +30,8 @@ public class JwtFilter extends OncePerRequestFilter{
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-                System.out.println("Entering jwtFilter");
                 final String jwt = getJwtFromCookies(request);
-                // String authHeader = request.getHeader("Authorization");
-                // String token = null;
                 String username = null;
-                // if(authHeader!=null && authHeader.startsWith("Bearer ")){
-                //     token = authHeader.substring(7);
-                //     username = service.extractUsername(token);
-                // }
                 if (jwt != null) {
                     try {
                         username = service.extractUsername(jwt);
@@ -47,22 +40,8 @@ public class JwtFilter extends OncePerRequestFilter{
                     }
                 }
                 else{
-                    System.out.println("UserName is null or not bearer");
+                    System.out.println("No token found");
                 }
-                // if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null){
-                //     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                //     if(service.validateToken(token,userDetails)){
-                //         UsernamePasswordAuthenticationToken token2 = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
-                //         token2.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                //         SecurityContextHolder.getContext().setAuthentication(token2);
-                //     }
-                //     else{
-                //         System.out.println("token is not valid");
-                //     }
-                // }
-                // else{
-                //     System.out.println("UserName is null or not authenticed");
-                // }
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         

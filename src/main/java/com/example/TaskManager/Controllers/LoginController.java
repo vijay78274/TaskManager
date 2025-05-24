@@ -68,10 +68,11 @@ public class LoginController {
             );
             String token = service.generateToken(request.getEmpId());
             Cookie cookie = new Cookie("token", token);
-            cookie.setHttpOnly(true); // prevent access via JavaScript
+            cookie.setHttpOnly(true); 
             cookie.setPath("/");
             cookie.setMaxAge(24 * 60 * 60); 
             response.addCookie(cookie);
+            System.out.println("Authentication Commpleted");
             return "redirect:/home";
         }
         catch (BadCredentialsException e) {
@@ -163,8 +164,10 @@ public class LoginController {
     public String homePage(Model model, Authentication authentication) {
         MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
         Role role = userDetails.getRole();
+        System.out.println(role);
         if (role.equals(Role.MANAGER)) {
-            return "manager-dashboard";
+            System.out.println("manager role");
+            return "redirect:/manager/dashboard";
         } else if (role.equals(Role.TEAM_LEAD)) {
             return "lead-dashboard";
         } else {
