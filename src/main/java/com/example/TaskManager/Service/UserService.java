@@ -34,6 +34,31 @@ public class UserService {
         // System.out.println(user);
     }
 
+    public void createTeamLead(String emp_id, String name, String email, String rawPassword, Role role, String manager_id){
+        Users user = new Users();
+        user.setEmpId(emp_id);
+        user.setEmail(email);
+        user.setName(name);
+        user.setRole(role);
+        user.setManagerId(manager_id);
+        String password = passwordEncoder.encode(rawPassword);
+        user.setPassword(password);
+        repository.save(user);
+        // System.out.println(user);
+    }
+    public void createTeamMember(String emp_id, String name, String email, String rawPassword, Role role, String manager_id, String team_lead_id){
+        Users user = new Users();
+        user.setEmpId(emp_id);
+        user.setEmail(email);
+        user.setName(name);
+        user.setRole(role);
+        user.setManagerId(manager_id);
+        user.setTeamLeadId(team_lead_id);
+        String password = passwordEncoder.encode(rawPassword);
+        user.setPassword(password);
+        repository.save(user);
+        // System.out.println(user);
+    }
     public List<Users> getAllUsers(){
         return repository.findAll();
     }

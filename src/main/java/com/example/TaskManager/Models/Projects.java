@@ -1,6 +1,8 @@
 package com.example.TaskManager.Models;
 
-import java.security.Timestamp;
+import java.time.LocalDate;
+
+import com.example.TaskManager.Security.Users;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,10 +19,24 @@ public class Projects {
     private Long id;
     private String name;
     private String description;
-    @Column(name="manager_id")
-    private String managerId;
     @Column(name = "created_at")
-    private Timestamp createdAt;
+    private LocalDate createdAt;
+    @Column(name="team_lead_id")
+    private String teamLeadId;
+    @Column(name = "deadline")
+    private LocalDate deadline;
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+    public String getTeamLead() {
+        return teamLeadId;
+    }
+    public void setTeamLead(String teamLead) {
+        this.teamLeadId = teamLead;
+    }
     public String getName() {
         return name;
     }
@@ -35,16 +51,10 @@ public class Projects {
     }
     @Column(name = "created_by")
     private String createdBy;
-    public String getManagerId() {
-        return managerId;
-    }
-    public void setManagerId(String managerId) {
-        this.managerId = managerId;
-    }
-    public Timestamp getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
     public String getCreatedBy() {

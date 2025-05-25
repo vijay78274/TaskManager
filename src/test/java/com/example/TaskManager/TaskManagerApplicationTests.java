@@ -6,9 +6,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import com.example.TaskManager.Models.Projects;
 import com.example.TaskManager.Models.Role;
+import com.example.TaskManager.Repository.ProjectRepository;
 import com.example.TaskManager.Security.Users;
 import com.example.TaskManager.Security.UsersRepository;
+import com.example.TaskManager.Service.ProjectService;
 import com.example.TaskManager.Service.UserService;
 
 @SpringBootTest
@@ -20,12 +23,29 @@ class TaskManagerApplicationTests {
 	UsersRepository repository;
 	@Autowired
 	JavaMailSender mailSender;
+	@Autowired
+	ProjectService service2;
 	@Test
 	void contextLoads() {
 	}
 	@Test
 	void creatUser(){
-		service.createUser("211340101042","Vijay Singh", "vijaynayal328@gmail.com", "2001", Role.MANAGER);
+		// service.createUser("211340101030","Rahul Pandey", "rahul2003@gmail.com", "2003", Role.MANAGER);
+		// service.createTeamLead("211340101008","Anshul Deoli", "anshul2004@gmail.com", "2004", Role.TEAM_LEAD, "211340101042");
+		// service.createTeamLead("211340101058","Sumit Bahuguna", "sumit123@gmail.com", "sumit123", Role.TEAM_LEAD,"211340101030");
+		// service.createTeamLead("211340101018","Mukul Thapliyal", "mukul123@gmail.com", "mukul123", Role.TEAM_LEAD,"211340101042");
+		// service.createTeamMember("211340101019","Akash Negi", "akash123@gmail.com", "akash123", Role.EMPLOYEE,"211340101042","211340101008");
+		// service.createTeamMember("211340101012","Nitin Rana", "nitin123@gmail.com", "nitin123", Role.EMPLOYEE,"211340101042","211340101008");
+		// service.createTeamMember("211340101003","Ritik Sharma", "ritik123@gmail.com", "ritik123", Role.EMPLOYEE,"211340101042","211340101008");
+		// service.createTeamMember("211340101007","Bipin Rawat", "bipin123@gmail.com", "bipin123", Role.EMPLOYEE,"211340101042","211340101008");
+		// service.createTeamMember("211340101019","Disha Pathak", "disha123@gmail.com", "disha123", Role.EMPLOYEE,"211340101042","211340101008");
+
+		// service.createTeamMember("211340101001","Ravi Negi", "ravi123@gmail.com", "ravi123", Role.EMPLOYEE,"211340101030","211340101058");
+		// service.createTeamMember("211340101002","Sarthak Rana", "sarthak123@gmail.com", "sarthak123", Role.EMPLOYEE,"211340101030","211340101058");
+		// service.createTeamMember("211340101009","Shreya Sharma", "shreya123@gmail.com", "shreya123", Role.EMPLOYEE,"211340101030","211340101058");
+		// service.createTeamMember("211340101010","Lucky Rawat", "lucky123@gmail.com", "lucky123", Role.EMPLOYEE,"211340101030","211340101058");
+		// service.createTeamMember("211340101011","Vedika Pathak", "vedika123@gmail.com", "vedika123", Role.EMPLOYEE,"211340101030","211340101058");
+
 	}
 	@Test 
 	void findUser(){
@@ -40,5 +60,10 @@ class TaskManagerApplicationTests {
     	message.setText("This is a test email.");
     	message.setFrom("vijaysingh7827407179@gmail.com");
 		mailSender.send(message);
+	}
+	@Test
+	public void insertProject(){
+		Projects project = service2.createProject("BookCab App", "Cab booking android application for employees", "211340101042");
+		System.out.println(project);
 	}
 }

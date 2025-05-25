@@ -64,9 +64,6 @@ public class Tasks {
     @ManyToOne
     private Users assignedTo;
 
-    @ManyToOne
-    private Tasks parentTask;
-
     public Priority getPriority() {
         return priority;
     }
@@ -90,12 +87,6 @@ public class Tasks {
     }
     public void setAssignedTo(Users assignedTo) {
         this.assignedTo = assignedTo;
-    }
-    public Tasks getParentTask() {
-        return parentTask;
-    }
-    public void setParentTask(Tasks parentTask) {
-        this.parentTask = parentTask;
     }
     
 }
