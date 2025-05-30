@@ -2,8 +2,6 @@ package com.example.TaskManager.Models;
 
 import java.time.LocalDate;
 
-import com.example.TaskManager.Security.Users;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,15 +14,15 @@ import jakarta.persistence.Table;
 public class Projects {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String description;
+    public Long id;
+    public String name;
+    public String description;
     @Column(name = "created_at")
-    private LocalDate createdAt;
+    public LocalDate createdAt;
     @Column(name="team_lead_id")
-    private String teamLeadId;
+    public String teamLeadId;
     @Column(name = "deadline")
-    private LocalDate deadline;
+    public LocalDate deadline;
     public LocalDate getDeadline() {
         return deadline;
     }
@@ -50,7 +48,7 @@ public class Projects {
         this.description = description;
     }
     @Column(name = "created_by")
-    private String createdBy;
+    public String createdBy;
     public LocalDate getCreatedAt() {
         return createdAt;
     }

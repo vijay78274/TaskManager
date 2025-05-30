@@ -38,7 +38,7 @@ public class SecurityConfig {
         .csrf(csrf -> csrf.disable()) 
         .authorizeHttpRequests(request -> 
             request
-            .requestMatchers("/css/**", "/javascript/**","/images/**","/login","/forgot","/send-otp","/reset-password","/jwt_login").permitAll() 
+            .requestMatchers("/css/**", "/javascript/**","/images/**","/login","/forgot","/send-otp","/reset-password","/jwt_login","/favicon.ico").permitAll() 
             .requestMatchers("/manager/**").hasRole("MANAGER")
                 .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -48,8 +48,8 @@ public class SecurityConfig {
             .logoutSuccessUrl("/login?logout")
             .invalidateHttpSession(true)
             .deleteCookies("token") 
-            .clearAuthentication(true))
-                .httpBasic(Customizer.withDefaults()).build();
+            .clearAuthentication(true)).build();
+                // .httpBasic(Customizer.withDefaults()).build();
     }
 
     @Bean

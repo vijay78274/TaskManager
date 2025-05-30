@@ -9,7 +9,7 @@
     <body>
         <nav class="navbar">
             <a href="/manager/dashboard">Home</a>
-            <a href="#">Projects</a>
+            <a href="/manager/projects">Projects</a>
             <a href="#">Create</a>
             <a href="#">My Profile</a>
         </nav>
@@ -27,12 +27,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <td>2312</td>
-                    <td>Employee Dashboard</td>
-                    <td>211340101012</td>
-                    <td>Frank Castle</td>
-                    <td>Matt, Regan, John, Robb, Eddward</td>
-                    <td>59%</td>
+                    <tr th:each="summary : ${summaries}">
+                        <td th:text="${summary.id}"></td>
+                        <td th:text="${summary.name}"></td>
+                        <td th:text="${summary.teamLeadId}"></td>
+                        <td th:text="${summary.teamLeadName}"></td>
+                        <td th:text="${summary.members}"></td>
+                        <td th:text="${summary.description}"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

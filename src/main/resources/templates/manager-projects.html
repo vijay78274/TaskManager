@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="UTF-8">
+        <meta type="viewport" content="width=device-width, initial-scale=1.0">
+        <title>document</title>
+        <link rel="stylesheet" th:href="@{/css/manager-projects.css}">
+    </head>
+    <body>
+        <nav class="navbar">
+            <a href="/manager/dashboard">Home</a>
+            <a href="/manager/projects">Projects</a>
+            <a href="#">Create</a>
+            <a href="#">My Profile</a>
+        </nav>
+        <div class="container">
+            <div class="items" th:each="project:${projects}" th:id="${project.id}">
+                <p th:text="${project.id}"></p>
+                <p th:text="${project.name}"></p>
+                <p th:text="${project.description}"></p>
+                <p th:text="${project.deadline}"></p>
+            </div>           
+        </div>
+        <script th:src="@{/javascript/manager-projects.js}"></script>
+     </body>
+</html>

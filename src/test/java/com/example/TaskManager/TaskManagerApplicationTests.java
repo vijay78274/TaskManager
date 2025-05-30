@@ -6,9 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import com.example.TaskManager.Models.Projects;
-import com.example.TaskManager.Models.Role;
-import com.example.TaskManager.Repository.ProjectRepository;
 import com.example.TaskManager.Security.Users;
 import com.example.TaskManager.Security.UsersRepository;
 import com.example.TaskManager.Service.ProjectService;
@@ -63,7 +60,9 @@ class TaskManagerApplicationTests {
 	}
 	@Test
 	public void insertProject(){
-		Projects project = service2.createProject("BookCab App", "Cab booking android application for employees", "211340101042");
-		System.out.println(project);
+		service2.createProject("BookCab App", "Cab booking android application for employees", "211340101042","211340101008");
+		service2.createProject("Ignite DashBoard", "Company career website for students", "211340101042","211340101058");
+		service2.createProject("AI data analyzer", "Tool to enhace analysis process", "211340101030","211340101018");
+
 	}
 }
