@@ -55,8 +55,7 @@ public class ManagerController {
         List<Users> teamMember = projectSummary.getTeam();
         model.addAttribute("summary", projectSummary);
         model.addAttribute("teams", teamMember);
+        System.out.println(teamMember);
         return "project-details";
     }
-    
-    
 }

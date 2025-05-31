@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="UTF-8">
+        <meta type="viewport" content="width=device-width, initial-scale=1.0">
+        <title>document</title>
+        <link rel="stylesheet" th:href="@{/css/project-details.css}">
+    </head>
+    <body>
+        <nav class="navbar">
+            <a href="#">Home</a>
+            <a href="#">Projects</a>
+            <a href="#">Create</a>
+            <a href="#">My Profile</a>
+        </nav>
+        <div class="container">
+            <h1>Team Lead</h1>
+            <div class="lead-div">
+                <p th:text="'Project Name: '+${summary.name}"></p>
+                <p th:text="'Description: '+${summary.description}"></p>
+                <p th:text="'Created At: '+${summary.createdAt}"></p>
+                <p th:text="'Deadline: '+${summary.deadline}"></p>
+                <p th:text="'Team Lead ID: '+${summary.teamLeadId}"></p>
+                <p th:text="'Team Lead Name: '+${summary.teamLeadName}"></p>
+                <p th:text="'Team Lead Email: '+${summary.teamLeadEmail}"></p>
+            </div>
+            <h1>Team Members</h1>
+            <div class="team-div">
+                <div class="team-members" th:each="team:${teams}">
+                    <p th:text="'Emp. ID: '+${team.empId}"></p>
+                    <p th:text="'Name: '+${team.name}"></p>
+                    <p th:text="'Email: '+${team.email}"></p>
+                </div>   
+            </div>        
+        </div>
+        <!-- <script th:src="@{/javascript/projects-details.js}"></script> -->
+    </body>
+</html>
