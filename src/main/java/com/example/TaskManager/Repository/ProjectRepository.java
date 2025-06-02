@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Projects,Long>{
     List<Projects> findByCreatedBy(String createdBy);
-    // Projects findById(Long id);
 }

@@ -1,14 +1,20 @@
 package com.example.TaskManager;
 
+import java.time.LocalDate;
+import java.time.Month;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
+import com.example.TaskManager.Models.Priority;
+import com.example.TaskManager.Models.Status;
 import com.example.TaskManager.Security.Users;
 import com.example.TaskManager.Security.UsersRepository;
 import com.example.TaskManager.Service.ProjectService;
+import com.example.TaskManager.Service.TaskService;
 import com.example.TaskManager.Service.UserService;
 
 @SpringBootTest
@@ -22,6 +28,8 @@ class TaskManagerApplicationTests {
 	JavaMailSender mailSender;
 	@Autowired
 	ProjectService service2;
+	@Autowired 
+	TaskService taskService;
 	@Test
 	void contextLoads() {
 	}
@@ -64,5 +72,9 @@ class TaskManagerApplicationTests {
 		service2.createProject("Ignite DashBoard", "Company career website for students", "211340101042","211340101058");
 		service2.createProject("AI data analyzer", "Tool to enhace analysis process", "211340101030","211340101018");
 
+	}
+	@Test
+	public void insertTask(){
+		taskService.createTask("211340101008","211340101003","Create frontend of platform","Frontend",Status.PENDING,LocalDate.parse("2025-06-05"),Priority.HIGH,1L);
 	}
 }
