@@ -69,9 +69,63 @@ p{
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
     width: 95%;
-    border-radius: 12px;
+    /* border-radius: 12px; */
     padding: 20px;
 }
 h1{
     color: white;
 }
+.individual-progress{
+    place-items: center;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    width: 90%;
+    height: fit-content;
+}
+.progresses{
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* margin: 10px; */
+    padding: 10px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    border: 2px solid rgba(255, 255, 255, 0.397);
+}
+.total-progress{
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    border: 2px solid rgba(255, 255, 255, 0.397);
+}
+.progress-circle {
+    --progress: 0; /* fallback */
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background:
+      conic-gradient(#4caf50 calc(var(--progress) * 1%), #ccc 0%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .progress-circle::after {
+    content: attr(data-label);
+    position: absolute;
+    font-size: 18px;
+  }

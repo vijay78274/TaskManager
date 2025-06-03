@@ -13,6 +13,7 @@ import com.example.TaskManager.Models.Priority;
 import com.example.TaskManager.Models.Status;
 import com.example.TaskManager.Security.Users;
 import com.example.TaskManager.Security.UsersRepository;
+import com.example.TaskManager.Service.ProgressService;
 import com.example.TaskManager.Service.ProjectService;
 import com.example.TaskManager.Service.TaskService;
 import com.example.TaskManager.Service.UserService;
@@ -30,6 +31,8 @@ class TaskManagerApplicationTests {
 	ProjectService service2;
 	@Autowired 
 	TaskService taskService;
+	@Autowired
+	ProgressService progressService;
 	@Test
 	void contextLoads() {
 	}
@@ -75,6 +78,10 @@ class TaskManagerApplicationTests {
 	}
 	@Test
 	public void insertTask(){
-		taskService.createTask("211340101008","211340101003","Create frontend of platform","Frontend",Status.PENDING,LocalDate.parse("2025-06-05"),Priority.HIGH,1L);
+		taskService.createTask("211340101008","211340101012","Create Models and Service Logic","Backend",Status.PENDING,LocalDate.parse("2025-06-05"),Priority.HIGH,1L);
+	}
+	@Test
+	public void insertProgress(){
+		progressService.createProgress(10, "Build Security and Login Logic", 4L, "211340101012", LocalDate.parse("2025-06-03"));
 	}
 }

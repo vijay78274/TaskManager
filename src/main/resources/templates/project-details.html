@@ -14,6 +14,19 @@
             <a href="#">My Profile</a>
         </nav>
         <div class="container">
+            <h1>Progress</h1>  
+            <div class="total-progress">
+                <p>Total Progress</p>
+                <div class="progress-circle" id="progressBar" th:style="'--progress:' + ${total}" th:attr="data-label=${total + '%'}"></div>
+            </div>
+            <div class="individual-progress">
+                <div class="progresses" th:each="pro:${progresses}">
+                    <p th:text="'Name: '+${pro.user.name}"></p>
+                    <div class="progress-circle" th:style="'--progress:' + ${pro.percentDone}" th:attr="data-label=${pro.percentDone + '%'}"></div>
+                    <p th:text="'Date: '+${pro.weekStart}"></p>
+                    <p th:text="'Summary: '+${pro.summary}"></p>
+                </div> 
+            </div>
             <h1>Team Lead</h1>
             <div class="lead-div">
                 <p th:text="'Project Name: '+${summary.name}"></p>
@@ -32,8 +45,7 @@
                     <p th:text="'Email: '+${team.email}"></p>
                 </div>   
             </div>  
-            <h1>Progress</h1>     
         </div>
-        <!-- <script th:src="@{/javascript/projects-details.js}"></script> -->
+        <script th:src="@{/javascript/project-details.js}"></script>
     </body>
 </html>
